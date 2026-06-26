@@ -10,17 +10,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #000000;
-            --bg-secondary: #000000;
-            --glass-bg: #111115;
-            --glass-bg-hover: #181820;
-            --glass-border: rgba(255, 255, 255, 0.14);
-            --glass-border-hover: rgba(255, 255, 255, 0.24);
-            --accent-1: #ffffff;
-            --accent-2: #ffffff;
-            --accent-3: #ffffff;
-            --accent-4: #ffffff;
-            --accent-glow: rgba(255, 255, 255, 0.03);
+            --bg-primary: #030306;
+            --bg-secondary: #080810;
+            --glass-bg: rgba(17, 17, 24, 0.75);
+            --glass-bg-hover: rgba(24, 24, 35, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-border-hover: rgba(139, 124, 247, 0.3);
+            --accent-1: #8B7CF7; /* Vibrant Purple */
+            --accent-2: #2EE8E3; /* Vibrant Teal */
+            --accent-3: #FF8FB8; /* Vibrant Pink */
+            --accent-4: #F5B041; /* Warm Gold */
+            --accent-glow: rgba(139, 124, 247, 0.04);
             --text-primary: #ffffff;
             --text-secondary: rgba(255, 255, 255, 0.85);
             --text-muted: rgba(255, 255, 255, 0.55);
@@ -30,8 +30,8 @@
             --radius-sm: 8px;
             --radius-md: 14px;
             --radius-lg: 20px;
-            --shadow-glass: none;
-            --shadow-glass-hover: none;
+            --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --shadow-glass-hover: 0 16px 48px 0 rgba(139, 124, 247, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05);
             --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-bounce: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -64,7 +64,7 @@
             inset: 0;
             z-index: 0;
             overflow: hidden;
-            display: none;
+            display: block;
         }
 
         .bg-blob {
@@ -604,13 +604,28 @@
             font-size: 20px;
         }
 
-        .section-header__icon--purple,
-        .section-header__icon--teal,
-        .section-header__icon--pink,
+        .section-header__icon--purple {
+            background: rgba(139, 124, 247, 0.1);
+            border: 1px solid rgba(139, 124, 247, 0.25);
+            color: #8B7CF7;
+        }
+
+        .section-header__icon--teal {
+            background: rgba(46, 232, 227, 0.1);
+            border: 1px solid rgba(46, 232, 227, 0.25);
+            color: #2EE8E3;
+        }
+
+        .section-header__icon--pink {
+            background: rgba(255, 143, 184, 0.1);
+            border: 1px solid rgba(255, 143, 184, 0.25);
+            color: #FF8FB8;
+        }
+
         .section-header__icon--gold {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ffffff;
+            background: rgba(245, 176, 65, 0.1);
+            border: 1px solid rgba(245, 176, 65, 0.25);
+            color: #F5B041;
         }
 
         .section-header__title {
@@ -1104,8 +1119,13 @@
             border-radius: 4px;
         }
 
+        ::-webkit-scrollbar-thumb {
+            background: rgba(139, 124, 247, 0.25);
+            border-radius: 4px;
+        }
+
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(139, 124, 247, 0.5);
         }
 
         /* ===== LOADING ANIMATION ===== */
@@ -1113,11 +1133,13 @@
             position: fixed;
             inset: 0;
             z-index: 9999;
-            background: var(--bg-primary);
+            background: #040408;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.8s cubic-bezier(0.85, 0, 0.15, 1), visibility 0.8s;
         }
 
         .loader.hidden {
@@ -1125,31 +1147,93 @@
             visibility: hidden;
         }
 
-        .loader-ring {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(255, 255, 255, 0.05);
-            border-top-color: var(--accent-1);
-            border-right-color: var(--accent-2);
-            border-radius: 50%;
-            animation: loaderSpin 1s linear infinite;
+        .loader-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            max-width: 90vw;
         }
 
-        @keyframes loaderSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .loader-logo {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #ffffff 20%, #8B7CF7 80%, #2EE8E3 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: pulseText 2s ease-in-out infinite;
+        }
+
+        .loader-bar-bg {
+            width: 240px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 100px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+
+        .loader-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #8B7CF7, #2EE8E3);
+            border-radius: 100px;
+            box-shadow: 0 0 12px rgba(139, 124, 247, 0.8);
+            animation: loadProgress 2.2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+        }
+
+        .loader-text {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            50% { width: 65%; }
+            80% { width: 90%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.85; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1); }
         }
 
         /* ===== MOUSE GLOW FOLLOWER ===== */
         .mouse-glow {
-            display: none;
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(139, 124, 247, 0.12) 0%, rgba(46, 232, 227, 0.05) 50%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            filter: blur(40px);
+            will-change: left, top;
+            transition: opacity 0.5s ease;
+            display: block;
         }
     </style>
 </head>
 <body>
     <!-- Loading Screen -->
     <div class="loader" id="loader">
-        <div class="loader-ring"></div>
+        <div class="loader-content">
+            <div class="loader-logo">PRIYANSHU SINGH</div>
+            <div class="loader-bar-bg">
+                <div class="loader-bar" id="loaderBar"></div>
+            </div>
+            <div class="loader-text">Loading portfolio</div>
+        </div>
     </div>
 
     <!-- Mouse Glow -->
@@ -1458,9 +1542,14 @@
     <script>
         // ===== LOADER =====
         window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            const loaderBar = document.getElementById('loaderBar');
+            if (loaderBar) {
+                loaderBar.style.width = '100%';
+            }
             setTimeout(() => {
-                document.getElementById('loader').classList.add('hidden');
-            }, 800);
+                loader.classList.add('hidden');
+            }, 1200);
         });
 
         // ===== PARTICLES =====
