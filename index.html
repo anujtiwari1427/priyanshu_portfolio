@@ -270,8 +270,7 @@
         }
 
         .split-layout {
-            display: grid;
-            grid-template-columns: 290px 1fr;
+            display: flex;
             gap: 36px;
             align-items: start;
         }
@@ -288,6 +287,83 @@
             align-items: center;
             text-align: center;
             z-index: 5;
+            width: 290px;
+            flex-shrink: 0;
+            position: relative;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease, border-radius 0.4s ease;
+        }
+
+        .sidebar__toggle {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            z-index: 10;
+        }
+
+        .sidebar__toggle:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        .sidebar__toggle svg {
+            transition: transform 0.4s ease;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+            padding: 40px 12px 24px;
+        }
+
+        .sidebar.collapsed .sidebar__toggle {
+            position: static;
+            margin-bottom: 24px;
+        }
+
+        .sidebar.collapsed .sidebar__toggle svg {
+            transform: rotate(180deg);
+        }
+
+        .sidebar .hero__name,
+        .sidebar .hero__title,
+        .sidebar .hero__contacts {
+            transition: opacity 0.3s ease, max-height 0.4s ease, margin 0.4s ease, transform 0.3s ease;
+            opacity: 1;
+            max-height: 500px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .hero__name,
+        .sidebar.collapsed .hero__title,
+        .sidebar.collapsed .hero__contacts {
+            opacity: 0;
+            max-height: 0;
+            margin: 0;
+            padding: 0;
+            pointer-events: none;
+            transform: scale(0.9);
+        }
+
+        .sidebar .hero__avatar {
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s cubic-bezier(0.4, 0, 0.2, 1), margin-bottom 0.4s ease;
+        }
+
+        .sidebar.collapsed .hero__avatar {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
         }
 
         .sidebar .hero__name {
@@ -318,6 +394,8 @@
         }
 
         .content-area {
+            flex-grow: 1;
+            width: 0;
             display: flex;
             flex-direction: column;
             gap: 28px;
@@ -827,14 +905,41 @@
         /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
             .split-layout {
-                grid-template-columns: 1fr;
+                flex-direction: column;
                 gap: 28px;
             }
 
             .sidebar {
+                width: 100% !important;
                 position: relative;
                 top: 0;
-                padding: 30px 20px;
+                padding: 30px 20px !important;
+            }
+
+            .sidebar__toggle {
+                display: none !important;
+            }
+
+            .sidebar.collapsed {
+                width: 100% !important;
+                padding: 30px 20px !important;
+            }
+
+            .sidebar.collapsed .hero__name,
+            .sidebar.collapsed .hero__title,
+            .sidebar.collapsed .hero__contacts {
+                opacity: 1 !important;
+                max-height: 500px !important;
+                pointer-events: auto !important;
+                transform: none !important;
+                margin: initial !important;
+                padding: initial !important;
+            }
+
+            .sidebar.collapsed .hero__avatar {
+                width: 120px !important;
+                height: 120px !important;
+                margin-bottom: 28px !important;
             }
 
             .sidebar .hero__contacts {
@@ -973,37 +1078,45 @@
     <main class="main-wrapper">
         <div class="split-layout">
             <!-- LEFT SIDEBAR -->
-            <aside class="sidebar reveal hero">
-                <div class="hero__avatar">
-                    <img src="WhatsApp Image 2026-06-26 at 2.47.42 PM.jpeg" alt="Priyanshu Singh profile photo">
-                </div>
-                <h1 class="hero__name"><span class="hero__name-first">Priyanshu</span> <span class="hero__name-last">Singh.</span></h1>
-                <p class="hero__title">
-                    <span>Data Analyst</span><br>
-                    AI Automation/Agent Developer<br>
-                    <span>AI/ML Engineer</span>
-                </p>
-                <div class="hero__contacts">
-                    <a href="tel:+919137609145" class="contact-chip">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-                        9137609145
-                    </a>
-                    <a href="mailto:ps5704760@gmail.com" class="contact-chip">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                        ps5704760@gmail.com
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" class="contact-chip">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                        LinkedIn
-                    </a>
-                    <a href="https://github.com/priyanshusingh0810" target="_blank" class="contact-chip">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                        GitHub
-                    </a>
-                    <span class="contact-chip">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        Kalyan East, Thane, MH
-                    </span>
+            <aside class="glass-card sidebar tilt-card reveal hero" id="sidebarCard">
+                <!-- Toggle Button -->
+                <button class="sidebar__toggle" id="sidebarToggle" title="Collapse Sidebar">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <div class="tilt-inner" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                    <div class="hero__avatar">
+                        <img src="WhatsApp Image 2026-06-26 at 2.47.42 PM.jpeg" alt="Priyanshu Singh profile photo">
+                    </div>
+                    <h1 class="hero__name"><span class="hero__name-first">Priyanshu</span> <span class="hero__name-last">Singh.</span></h1>
+                    <p class="hero__title">
+                        <span>Data Analyst</span><br>
+                        AI Automation/Agent Developer<br>
+                        <span>AI/ML Engineer</span>
+                    </p>
+                    <div class="hero__contacts">
+                        <a href="tel:+919137609145" class="contact-chip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                            9137609145
+                        </a>
+                        <a href="mailto:ps5704760@gmail.com" class="contact-chip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            ps5704760@gmail.com
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="contact-chip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://github.com/priyanshusingh0810" target="_blank" class="contact-chip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+                            GitHub
+                        </a>
+                        <span class="contact-chip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            Kalyan East, Thane, MH
+                        </span>
+                    </div>
                 </div>
             </aside>
 
@@ -1309,6 +1422,20 @@
                 tag.style.boxShadow = '';
             });
         });
+
+        // ===== SIDEBAR COLLAPSE TOGGLE =====
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarCard = document.getElementById('sidebarCard');
+        if (sidebarToggle && sidebarCard) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebarCard.classList.toggle('collapsed');
+                if (sidebarCard.classList.contains('collapsed')) {
+                    sidebarToggle.setAttribute('title', 'Expand Sidebar');
+                } else {
+                    sidebarToggle.setAttribute('title', 'Collapse Sidebar');
+                }
+            });
+        }
 
         // ===== GLASSMORPHISM NAVBAR SCROLL SPY =====
         const navBtns = document.querySelectorAll('.glass-nav__btn[data-target]');
