@@ -567,8 +567,8 @@
 
         /* ===== SECTIONS GRID ===== */
         .sections-grid {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 28px;
         }
 
@@ -982,6 +982,11 @@
                 padding: 20px 16px 60px !important;
             }
 
+            .sections-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+
             .section-card {
                 padding: 28px 24px !important;
             }
@@ -1219,7 +1224,7 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                             ps5704760@gmail.com
                         </a>
-                        <a href="https://linkedin.com" target="_blank" class="contact-chip">
+                        <a href="https://www.linkedin.com/in/priyanshu-singh-616318417/" target="_blank" class="contact-chip">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
                             LinkedIn
                         </a>
@@ -1270,11 +1275,21 @@
                     <div class="exp-item">
                         <div class="exp-item__role">Data Analytics Mini Internship</div>
                         <div class="exp-item__company">TATA</div>
+                        <ul class="exp-item__bullets">
+                            <li>Cleaned, filtered, and prepared raw datasets for analysis using Python and Pandas.</li>
+                            <li>Identified key business performance trends and drafted summaries of data insights.</li>
+                            <li>Formulated analytical recommendations to improve data-driven decision-making processes.</li>
+                        </ul>
                     </div>
 
                     <div class="exp-item">
                         <div class="exp-item__role">Data Visualization Micro Internship</div>
                         <div class="exp-item__company">FORAGE</div>
+                        <ul class="exp-item__bullets">
+                            <li>Designed and built interactive visualization dashboards using Tableau and Power BI.</li>
+                            <li>Selected optimal chart types (bar charts, line graphs, maps) to represent complex business metrics.</li>
+                            <li>Presented visual data stories that effectively communicated insights and key trends to stakeholders.</li>
+                        </ul>
                     </div>
 
                     <div class="exp-item">
