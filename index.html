@@ -167,6 +167,9 @@
             transform: translateX(-50%);
             z-index: 100;
             padding-top: 18px;
+            width: max-content;
+            max-width: 95vw;
+            box-sizing: border-box;
         }
 
         .glass-nav__inner {
@@ -180,6 +183,9 @@
             backdrop-filter: blur(24px) saturate(180%);
             -webkit-backdrop-filter: blur(24px) saturate(180%);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .glass-nav__btn {
@@ -248,17 +254,7 @@
             flex-shrink: 0;
         }
 
-        @media (max-width: 768px) {
-            .glass-nav__btn {
-                padding: 8px 12px;
-            }
-            .glass-nav__btn .nav-label {
-                display: none;
-            }
-            .glass-nav__btn .nav-icon {
-                display: inline;
-            }
-        }
+        /* Moved to bottom of stylesheet for proper cascading */
 
         /* ===== MAIN LAYOUT ===== */
         .main-wrapper {
@@ -905,15 +901,20 @@
         /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
             .split-layout {
-                flex-direction: column;
-                gap: 28px;
+                flex-direction: column !important;
+                gap: 28px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
             }
 
             .sidebar {
                 width: 100% !important;
-                position: relative;
-                top: 0;
+                max-width: 100% !important;
+                position: relative !important;
+                top: 0 !important;
                 padding: 30px 20px !important;
+                box-sizing: border-box !important;
             }
 
             .sidebar__toggle {
@@ -922,7 +923,9 @@
 
             .sidebar.collapsed {
                 width: 100% !important;
+                max-width: 100% !important;
                 padding: 30px 20px !important;
+                box-sizing: border-box !important;
             }
 
             .sidebar.collapsed .hero__name,
@@ -942,31 +945,143 @@
                 margin-bottom: 28px !important;
             }
 
+            .sidebar .hero__name {
+                max-width: 100% !important;
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
+            }
+
             .sidebar .hero__contacts {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 10px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
             }
 
             .sidebar .contact-chip {
-                width: auto;
-                justify-content: center;
+                display: inline-flex !important;
+                width: auto !important;
+                max-width: 100% !important;
+                justify-content: center !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Override the desktop width: 0 to expand sidebar main content properly on mobile */
+            .content-area {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
             }
         }
 
         @media (max-width: 768px) {
             .main-wrapper {
-                padding: 20px 16px 60px;
+                padding: 20px 16px 60px !important;
             }
 
             .section-card {
-                padding: 28px 24px;
+                padding: 28px 24px !important;
             }
 
             .edu-item {
-                flex-direction: column;
-                gap: 12px;
+                flex-direction: column !important;
+                gap: 12px !important;
+            }
+
+            /* Glassmorphism Navbar adjustments */
+            .glass-nav {
+                max-width: 95vw !important;
+                width: max-content !important;
+                padding-top: 12px !important;
+            }
+
+            .glass-nav__inner {
+                gap: 2px !important;
+                padding: 4px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .glass-nav__btn {
+                padding: 8px 12px !important;
+            }
+
+            .glass-nav__btn .nav-label {
+                display: none !important;
+            }
+
+            .glass-nav__btn .nav-icon {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            .glass-nav__divider {
+                display: none !important; /* Hide vertical line to save width space on tablet/mobile */
+            }
+
+            /* Optimize hero fonts for tablet */
+            .sidebar .hero__name {
+                font-size: 1.8rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-wrapper {
+                padding: 16px 12px 60px !important;
+            }
+
+            .section-card {
+                padding: 24px 16px !important;
+            }
+
+            /* Glass nav smaller spacing for mobile devices */
+            .glass-nav__btn {
+                padding: 8px 8px !important;
+            }
+
+            /* Contact chips responsive wrapping & spacing */
+            .sidebar .hero__contacts {
+                gap: 8px !important;
+            }
+
+            .sidebar .contact-chip {
+                padding: 6px 12px !important;
+                font-size: 0.8rem !important;
+                gap: 6px !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+
+            .sidebar .contact-chip svg {
+                width: 14px !important;
+                height: 14px !important;
+            }
+
+            /* Scale down project cards and resume sections */
+            .exp-item, .edu-item, .cert-item {
+                padding: 16px !important;
+            }
+
+            .exp-item__role, .edu-item__degree {
+                font-size: 0.95rem !important;
+            }
+
+            .exp-item__company, .edu-item__school {
+                font-size: 0.8rem !important;
+            }
+
+            .skills-category__label {
+                font-size: 0.75rem !important;
+            }
+
+            .skill-tag {
+                padding: 4px 10px !important;
+                font-size: 0.75rem !important;
             }
         }
 
@@ -1085,7 +1200,7 @@
                         <polyline points="15 18 9 12 15 6"></polyline>
                     </svg>
                 </button>
-                <div class="tilt-inner" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                <div class="tilt-inner" style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 100%; box-sizing: border-box;">
                     <div class="hero__avatar">
                         <img src="WhatsApp Image 2026-06-26 at 2.47.42 PM.jpeg" alt="Priyanshu Singh profile photo">
                     </div>
@@ -1585,6 +1700,8 @@
             });
             resizeObs.observe(heroEl);
         })();
+
+
     </script>
 </body>
 </html>
